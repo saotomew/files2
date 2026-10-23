@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two months of us</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#3a2a22;--card:#dcc0a0;--btn:#5a3a2a;--paper:#f3e1bd}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;background:linear-gradient(160deg,#f5e9d9 0%,#ead5ba 55%,#dfc3a2 100%) fixed;color:var(--ink);font-family:'Nunito',sans-serif;line-height:1.75;font-size:1.05rem}
+  main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:56px 22px 90px}
+  section{margin-top:72px}
+  h1,h2{font-family:'Bricolage Grotesque',sans-serif;text-align:center;line-height:1.15;margin:0 0 22px}
+  h1{font-size:3rem;font-weight:800}
+  h2{font-size:1.7rem;font-weight:800}
+  .intro{text-align:center;margin:-8px 0 24px}
+  .sign{text-align:center;font-style:italic;margin-top:24px}
+
+  /* songs */
+  .song{width:100%;height:152px;border:0;border-radius:14px;margin-bottom:12px}
+
+  /* movies */
+  .movies{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .movie{background:var(--card);border:0;border-radius:22px;padding:10px;cursor:pointer;font:inherit;color:inherit;text-align:center}
+  .movie img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:14px;background:#c4a583}
+  .movie span{display:block;margin-top:8px;font-weight:600;line-height:1.3}
+
+  /* popup (movies + paw messages) */
+  .modal{position:fixed;inset:0;background:rgba(20,25,32,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:10}
+  .modal.open{display:flex}
+  .box{background:#fffaf2;border-radius:22px;width:100%;max-width:400px;max-height:86vh;overflow:auto;padding:24px;position:relative;animation:pop .18s ease-out}
+  @keyframes pop{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
+  .box img{width:60%;display:block;margin:0 auto 14px;border-radius:14px}
+  .box h3{font-family:'Bricolage Grotesque',sans-serif;font-size:1.4rem;text-align:center;margin:0 0 10px}
+  .box p{margin:0;white-space:pre-wrap}
+  .box .from{margin-top:14px;font-style:italic;text-align:right}
+  .close{position:absolute;top:8px;right:14px;border:0;background:none;font-size:1.8rem;cursor:pointer;color:var(--btn)}
+
+  /* paw paper */
+  .paper{position:relative;height:440px;background-color:var(--paper);border-radius:8px;overflow:hidden;
+    background-image:radial-gradient(rgba(150,110,60,.15) 1px,transparent 1.6px);background-size:7px 7px;
+    box-shadow:0 8px 20px rgba(60,40,10,.18);outline:3px dotted var(--paper);outline-offset:-5px;border:1px solid rgba(120,80,40,.25)}
+  .paw{position:absolute;border:0;background:none;padding:0;cursor:pointer;transition:transform .15s}
+  .paw:hover{transform:scale(1.15)!important}
+  .paw svg{width:100%;height:100%;display:block}
+  .empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;color:#8a7350}
+
+  /* form */
+  form{margin-top:26px}
+  textarea,input[type=text]{width:100%;font:inherit;padding:12px 14px;border:2px solid var(--card);border-radius:14px;background:#fffaf2;margin-bottom:10px}
+  textarea{height:110px;resize:vertical}
+  .btn{display:block;width:100%;font:inherit;font-weight:600;padding:13px;border:0;border-radius:14px;background:var(--btn);color:#fff;cursor:pointer}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .status{text-align:center;min-height:1.5em;margin:10px 0 0;font-size:.95rem}
+
+  /* private message link */
+  .private{display:block;text-align:center;text-decoration:none;color:inherit;background:var(--card);border-radius:22px;padding:22px}
+  .private b{font-family:'Bricolage Grotesque',sans-serif;font-size:1.3rem}
+  .private small{display:block;opacity:.75}
+  /* floating hearts */
+  .hearts{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+  .hearts span{position:absolute;bottom:-40px;opacity:.35;animation:floatUp linear infinite}
+  @keyframes floatUp{0%{transform:translate(0,0) rotate(-10deg)}50%{transform:translate(18px,-55vh) rotate(10deg)}100%{transform:translate(-10px,-115vh) rotate(-10deg)}}
+  @media (prefers-reduced-motion:reduce){.hearts span{animation:none;bottom:var(--b)}}
+
+  /* laptop / bigger screens */
+  @media (min-width:768px){
+    main{max-width:640px;padding-top:80px}
+    h1{font-size:3.8rem} h2{font-size:2rem}
+    .paper{height:520px}
+    .movies{max-width:540px;margin:0 auto}
+  }
+  :focus-visible{outline:3px solid var(--btn);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts"></div>
+<main>
+
+  <!-- ================= SECTION 1: TWO MONTHS OF US ================= -->
+  <section style="margin-top:0">
+    <h1>Two months of us</h1>
+
+    <!-- EDIT: your 2 paragraphs. Change the words between <p> and </p> -->
+    <p>Two months. I'm still a little amazed that I get to hold your hand. I feel really lucky that I met you, that I get to call you mine, and that I'm still your partner today. You love me in a way that makes me feel so cared for, and I never want to take that for granted.</p>
+    <p>I'm not someone who can make fancy gifts or give big romantic speeches. So I made this little corner of the internet instead: songs that sound like you, movies that remind me of you, and a few words from people who are happy for us. It's small, but I put all of me into it.</p>
+    <p class="sign">- with all of me, Keemy</p>
+  </section>
+
+  <!-- ================= SECTION 2: SONGS ================= -->
+  <section>
+    <h2>Five songs for you</h2>
+    <!-- EDIT: short message before the songs -->
+    <p class="intro">These are the songs I keep coming back to when I think about us. Press play, and maybe listen with your headphones on.</p>
+    <div id="songs"></div>
+  </section>
+
+  <!-- ================= SECTION 3: MOVIES ================= -->
+  <section>
+    <h2>Movies that remind me of you</h2>
+    <p class="intro">Tap a movie to see why.</p>
+    <div class="movies" id="movies"></div>
+  </section>
+
+  <!-- ================= SECTION 4: PAW-MESSAGES ================= -->
+  <section>
+    <h2>Paw-messages</h2>
+    <!-- EDIT: the line under the title -->
+    <p class="intro">Little notes from people who care about us. Tap a paw to read one.</p>
+    <div class="paper" id="paper"></div>
+
+    <form id="form">
+      <textarea id="msg" maxlength="300" placeholder="Write your message for us..."></textarea>
+      <input type="text" id="from" maxlength="30" placeholder="From (leave empty to stay anonymous)">
+      <button class="btn" id="send" type="submit" disabled>Send your paw-message</button>
+      <p class="status" id="status"></p>
+    </form>
+  </section>
+
+  <!-- ================= SECTION 5: PRIVATE MESSAGE ================= -->
+  <section>
+    <a class="private" href="private.html">
+      <b>💌 A message just for you</b>
+      <small>(can be opened by Jude only)</small>
+    </a>
+  </section>
+
+</main>
+
+<!-- one popup used by both movies and paws -->
+<div class="modal" id="modal">
+  <div class="box" id="box"></div>
+</div>
+
+<script>
+/* =====================================================
+   EDIT HERE #1 — YOUR 5 SONGS
+   In Spotify: tap the 3 dots on a song > Share > Copy link.
+   Paste the link between the quotes. Keep the commas.
+   ===================================================== */
+const SONGS = [
+  "https://open.spotify.com/embed/track/2UgCs0i0rNHUH2jKE5NZHE?utm_source=generator&theme=0&si=d990a64825374610",
+  "https://open.spotify.com/embed/track/2VpC5uhuejazJZ0ZCfPaoc?utm_source=generator&theme=0&si=64eb60ebacb14c29",
+  "https://open.spotify.com/embed/track/2QB8FwOszur18Ai7t2XnNi?utm_source=generator&theme=0&si=bb277035ff1c4258",
+  "https://open.spotify.com/embed/track/2eL0BfP66sUvn4NF6qhhXt?utm_source=generator&theme=0&si=9659f4dfe7504a1a",
+  "https://open.spotify.com/embed/track/16gJmoOqRt2lKmlXtDpWgH?utm_source=generator&theme=0&si=d72e4d62bacf4b52"
+];
+
+/* =====================================================
+   EDIT HERE #2 — YOUR 6 MOVIES
+   poster: put the image in the "posters" folder, then write its file name here.
+   title: the movie title
+   reason: why it reminds you of them (this shows in the popup)
+   ===================================================== */
+const MOVIES = [
+  { title: "Call Me by Your Name (2017)", poster: "posters/1.png", reason: "This movie reminds me of you because you love the songs from it, and now whenever I think of this movie, I somehow think of you too. It’s sweet how something as simple as a song can remind me of someone special and make an ordinary moment feel a little more meaningful. Maybe that's what makes this movie feel special to me. It reminds me that sometimes, the smallest things can hold the warmest feelings, and I love having little things like this that make me think of you." },
+  { title: "Pride & Prejudice (2005)", poster: "posters/2.png", reason: "This movie reminds me of us because of how two people can start off misunderstanding each other, only to slowly discover something beautiful between them. I think there’s something so cute about how their feelings grow over time, as they get to know each other beyond their first impressions. And honestly, I like to think of it as a little reminder of us, too. Two people finding their way to each other in their own time, learning more about each other along the way, and discovering that sometimes the most unexpected beginnings can lead to something really lovely." },
+  { title: "Before Sunset (2004)", poster: "posters/3.png", reason: "This movie reminds me of you because it shows how special it can be to spend time with someone who makes even the simplest conversations feel meaningful. There’s something beautiful about walking around together, talking about random things, sharing thoughts, and somehow never running out of things to say. It makes me think about all the little moments I want to share with you, even the ones that might seem ordinary to everyone else. Because when it’s with you, I think even a simple conversation or a quiet walk could become one of my favorite memories." },
+  { title: "Ponyo (2008)", poster: "posters/4.png", reason: "Ponyo reminds me of you because it has that kind of love that feels so pure, warm, and full of happiness. It reminds me of the little things that make being with someone special feel magical, like getting excited over the smallest things and finding comfort in simply having each other around. I love how this movie makes love feel like an adventure filled with curiosity, sweetness, and joy. It reminds me that I don't need every moment with you to be perfect or extraordinary, because sometimes, just sharing the little adventures of life together is already more than enough." },
+  { title: "About Time (2013)", poster: "posters/5.png", reason: "About Time reminds me of you because it shows how the most precious parts of life are often hidden in ordinary moments. It makes me think about how even the simplest days can become unforgettable when they're spent with someone who means so much to you. If I could take anything from this movie, it would be the wish to appreciate every little moment we get to share. The silly conversations, the random laughs, the quiet days, and all the memories we haven't made yet. I hope that someday, when I look back on this part of my life, I'll smile knowing that you were one of its most beautiful chapters." },
+  { title: "Imagine Me & You (2005)", poster: "posters/6.png", reason: "Imagine You and Me reminds me of you because it captures that lovely feeling of finding someone who makes your heart feel a little more at home. There's something so sweet about the idea of two people meeting, growing closer, and slowly becoming part of each other's happiness in ways they never expected. It makes me think about how happy I am that our paths crossed and that I get to share this little part of my life with you. And if I could imagine all the lovely things waiting for us in the future, I think I'd want more moments with you, more memories to keep, and more reasons to fall for you in ways both big and small." }
+];
+
+/* =====================================================
+   EDIT HERE #3 — PAW-MESSAGES DATABASE (Firebase)
+   Paste your Firebase Realtime Database URL between the quotes,
+   with no "/" at the end. Example:
+   "https://my-project-default-rtdb.firebaseio.com"
+   Leave it empty ("") to test on your own device only.
+   ===================================================== */
+const DB_URL = "https://twomonths-b45da-default-rtdb.firebaseio.com";
+const MAX_MESSAGES = 50;
+
+/* ---------- you don't need to change anything below ---------- */
+const $ = id => document.getElementById(id);
+const modal = $('modal'), box = $('box');
+
+function openModal(build){
+  box.innerHTML = '<button class="close" aria-label="Close">&times;</button>';
+  build(box);
+  modal.classList.add('open');
+  box.querySelector('.close').onclick = closeModal;
+}
+function closeModal(){ modal.classList.remove('open'); }
+modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+// floating hearts
+(() => {
+  const wrap = $('hearts'), colors = ['#d98c8c','#c8a27a','#b5735a','#e8b4a0'];
+  for(let i = 0; i < 22; i++){
+    const h = document.createElement('span'); h.textContent = '♥';
+    h.style.cssText = `left:${Math.random()*100}%;--b:${Math.random()*95}%;font-size:${10+Math.random()*18}px;color:${colors[i%4]};animation-duration:${14+Math.random()*16}s;animation-delay:-${Math.random()*30}s`;
+    wrap.appendChild(h);
+  }
+})();
+
+// songs
+SONGS.forEach(link => {
+  const m = link.match(/track\/([A-Za-z0-9]+)/);
+  if(!m) return;
+  const f = document.createElement('iframe');
+  f.className = 'song';
+  f.src = 'https://open.spotify.com/embed/track/' + m[1];
+  f.allow = 'encrypted-media';
+  f.loading = 'lazy';
+  $('songs').appendChild(f);
+});
+
+// movies
+MOVIES.forEach(mv => {
+  const b = document.createElement('button');
+  b.className = 'movie';
+  b.innerHTML = '<img alt=""><span></span>';
+  b.querySelector('img').src = mv.poster;
+  b.querySelector('span').textContent = mv.title;
+  b.onclick = () => openModal(el => {
+    const img = document.createElement('img'); img.src = mv.poster; img.alt = mv.title;
+    const h = document.createElement('h3'); h.textContent = mv.title;
+    const p = document.createElement('p'); p.textContent = mv.reason;
+    el.append(img, h, p);
+  });
+  $('movies').appendChild(b);
+});
+
+// paw-messages: storage
+async function getMessages(){
+  if(!DB_URL) return JSON.parse(localStorage.getItem('paw') || '[]');
+  const d = (await (await fetch(DB_URL + '/messages.json')).json()) || {};
+  return Object.entries(d).map(([id, v]) => ({ id, ...v })).sort((a, b) => a.t - b.t);
+}
+async function saveMessage(m){
+  if(!DB_URL){
+    const l = await getMessages(); l.push(m);
+    localStorage.setItem('paw', JSON.stringify(l.slice(-MAX_MESSAGES)));
+    return;
+  }
+  await fetch(DB_URL + '/messages.json', { method:'POST', body: JSON.stringify(m) });
+  const l = await getMessages();
+  for(const old of l.slice(0, Math.max(0, l.length - MAX_MESSAGES))){
+    await fetch(`${DB_URL}/messages/${old.id}.json`, { method:'DELETE' });
+  }
+}
+
+// paw-messages: drawing
+const PAW = `<svg viewBox="0 0 100 100"><g fill="#2a2a2e" stroke="#fff" stroke-width="7" paint-order="stroke" stroke-linejoin="round">
+<path d="M50 48c-14 0-26 14-26 26 0 9 8 12 15 11 6-1 8-3 11-3s5 2 11 3c7 1 15-2 15-9 0-14-12-28-26-28z"/>
+<ellipse cx="18" cy="44" rx="8" ry="11" transform="rotate(-25 18 44)"/><ellipse cx="38" cy="24" rx="8" ry="11" transform="rotate(-8 38 24)"/>
+<ellipse cx="62" cy="24" rx="8" ry="11" transform="rotate(8 62 24)"/><ellipse cx="82" cy="44" rx="8" ry="11" transform="rotate(25 82 44)"/></g></svg>`;
+
+function drawPaws(list){
+  const paper = $('paper'); paper.innerHTML = '';
+  if(!list.length){ paper.innerHTML = '<div class="empty">No paw-messages yet. Be the first one to leave a note!</div>'; return; }
+  const W = paper.clientWidth, H = paper.clientHeight, n = list.length;
+  const size = Math.max(34, Math.min(90, Math.sqrt(W * H / (n * 2.4))));
+  const placed = [];
+  list.forEach(m => {
+    let gap = size * 0.95, x, y;
+    for(let tries = 0; tries < 300; tries++){
+      if(tries === 150) gap *= 0.8;
+      x = Math.random() * (W - size); y = Math.random() * (H - size);
+      if(placed.every(p => Math.hypot(p.x - x, p.y - y) >= gap)) break;
+    }
+    placed.push({ x, y });
+    const b = document.createElement('button');
+    b.className = 'paw'; b.setAttribute('aria-label', 'Read paw-message');
+    b.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px;transform:rotate(${Math.random() * 50 - 25}deg)`;
+    b.innerHTML = PAW;
+    b.onclick = () => openModal(el => {
+      const p = document.createElement('p'); p.textContent = m.text;
+      const f = document.createElement('p'); f.className = 'from'; f.textContent = '– ' + (m.from || 'Anonymous');
+      el.append(p, f);
+    });
+    paper.appendChild(b);
+  });
+}
+async function refresh(){
+  try{ drawPaws(await getMessages()); }
+  catch(e){ $('paper').innerHTML = '<div class="empty">Could not load the messages. Try refreshing the page.</div>'; }
+}
+
+// paw-messages: form
+const msg = $('msg'), send = $('send'), status = $('status');
+msg.addEventListener('input', () => { send.disabled = !msg.value.trim(); });
+$('form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const text = msg.value.trim(); if(!text) return;
+  send.disabled = true; status.textContent = 'Sending...';
+  try{
+    await saveMessage({ text, from: $('from').value.trim() || 'Anonymous', t: Date.now() });
+    msg.value = ''; $('from').value = ''; status.textContent = 'Sent! Thank you 🐾';
+    await refresh();
+  }catch(err){ status.textContent = 'Something went wrong. Please try again.'; send.disabled = false; }
+});
+
+refresh();
+</script>
+</body>
+</html>
